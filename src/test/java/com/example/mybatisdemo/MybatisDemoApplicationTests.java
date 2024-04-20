@@ -128,6 +128,7 @@ class MybatisDemoApplicationTests {
         }
     }
 
+
     //
     @Test
     void testQueryWrapper_5(){
@@ -208,5 +209,14 @@ class MybatisDemoApplicationTests {
         userDao.updateById(userB);
     }
 
-
+    @Test
+    void TestCountByGroup(){
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<User> ageCountWrapper = userQueryWrapper.select(true, "count(*)", "age").groupBy(true, "age");
+        List<Map<String, Object>> maps = userDao.selectMaps(ageCountWrapper);
+        for (Map map :
+                maps) {
+            System.out.println(map);
+        }
+    }
 }
